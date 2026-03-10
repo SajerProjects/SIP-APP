@@ -172,7 +172,7 @@ export default function App() {
         {view === "weekly" ? (
           <WeeklyView D={D} me={me} onUpdateCheckin={updateCheckin} onAddCheckinComment={addCheckinComment} onOpenDoc={id => { setViewing(id); setView("home"); }} />
         ) : !viewing ? (
-          <GridView D={D} me={me} onOpen={id => setViewing(id)} />
+          <GridView D={D} me={me} onOpen={id => setViewing(id)} onWeekly={() => { setViewing(null); setView("weekly"); }} />
         ) : (
           <DocView member={member} me={me} allMembers={D.members} onUpdateSection={updateSection} onAddComment={addComment} onAddSection={addSection} />
         )}

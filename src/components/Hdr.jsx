@@ -41,13 +41,6 @@ export default function Hdr({ D, myMember, viewing, view, onBack, onWeekly, memb
             <span style={{ fontFamily: fonts.mono, fontSize: 9, color: colors.error, letterSpacing: 1 }}>OFFLINE</span>
           )}
           <div style={{ flex: 1 }} />
-          {myMember && !viewing && view !== "weekly" && (
-            <button onClick={onWeekly} style={{
-              background: "none", border: `1px solid ${colors.subtleBorder}`, color: colors.accent,
-              borderRadius: 6, padding: "5px 12px", fontSize: 10, cursor: "pointer",
-              fontFamily: fonts.mono, letterSpacing: 2, fontWeight: 600, marginRight: 8,
-            }}>WEEKLY</button>
-          )}
           {myMember && (
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <span style={{ fontSize: 18 }}>{myMember.avatar}</span>

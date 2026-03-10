@@ -1,8 +1,9 @@
-import { fonts, colors } from "../styles";
+import { getWeekKey, formatWeekLabel, timeAgo } from "../utils";
+import { fonts, colors, shared } from "../styles";
 import SLabel from "./SLabel";
 import ActivityFeed from "./ActivityFeed";
 
-export default function GridView({ D, me, onOpen }) {
+export default function GridView({ D, me, onOpen, onWeekly }) {
   return (
     <div>
       <div style={{ marginBottom: 32 }}>
@@ -11,6 +12,74 @@ export default function GridView({ D, me, onOpen }) {
         </h1>
         <SLabel>{D.members.length} MEMBER{D.members.length !== 1 ? "S" : ""}</SLabel>
       </div>
+
+      {/* Weekly Check-in Banner */}
+      {D.members.length > 0 && (() => {
+        const weekKey = getWeekKey();
+        const weekData = D.weeklies?.[weekKey] || { checkins: {} };
+        const checkins = weekData.checkins || {};
+        const checkedIn = D.members.filter(m => checkins[m.id]?.filledAt);
+        const allDone = checkedIn.length === D.members.length;
+
+        return (
+          <div
+            onClick={onWeekly}
+            style={{
+              ...shared.card,
+              borderRadius: 14,
+              padding: "20px 24px",
+              marginBottom: 28,
+              borderLeft: "none",
+              cursor: "pointer",
+              transition: "all .2s",
+              background: colors.card,
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = "#141420"; e.currentTarget.style.borderColor = colors.accent + "80"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = colors.card; e.currentTarget.style.borderColor = colors.cardBorder; }}
+          >
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ marginBottom: 6 }}>
+                  <span style={{ fontFamily: fonts.heading, fontSize: 22, letterSpacing: 2, color: colors.accent }}>WEEKLY CHECK-IN</span>
+                </div>
+                <SLabel>{formatWeekLabel(getWeekKey())}</SLabel>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                {/* Avatar stack of who's checked in */}
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {D.members.map((m, i) => {
+                    const done = !!checkins[m.id]?.filledAt;
+                    return (
+                      <div key={m.id} style={{
+                        width: 30, height: 30, borderRadius: "50%",
+                        background: done ? colors.inputBg : "#0D0D14",
+                        border: `2px solid ${done ? m.color : colors.textGhost}`,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: 14, marginLeft: i > 0 ? -8 : 0, zIndex: D.members.length - i,
+                        opacity: done ? 1 : 0.4,
+                      }}>
+                        {m.avatar}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div style={{ textAlign: "center" }}>
+                  <div style={{
+                    fontFamily: fonts.heading, fontSize: 28,
+                    color: allDone ? colors.success : colors.accent,
+                  }}>
+                    {checkedIn.length}/{D.members.length}
+                  </div>
+                </div>
+
+                <span style={{ fontFamily: fonts.mono, fontSize: 16, color: colors.textDimmer }}>&rsaquo;</span>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {D.members.length === 0 && (
         <div style={{ textAlign: "center", padding: "56px 0", color: colors.textGhost, fontFamily: "monospace", fontSize: 11, letterSpacing: 2 }}>
