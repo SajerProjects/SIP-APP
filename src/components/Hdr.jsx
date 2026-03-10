@@ -35,7 +35,7 @@ export default function Hdr({ D, myMember, viewing, view, onBack, onWeekly, memb
             fontFamily: fonts.heading, fontSize: 24, color: colors.accent,
             letterSpacing: 4, flexShrink: 0,
           }}>
-            {view === "weekly" ? "WEEKLY" : viewing ? memberName?.toUpperCase() : D.groupName}
+            {view === "weekly" ? "WEEKLY" : viewing ? memberName?.toUpperCase() : "STRICTLY IN PROFIT"}
           </span>
           {!connected && (
             <span style={{ fontFamily: fonts.mono, fontSize: 9, color: colors.error, letterSpacing: 1 }}>OFFLINE</span>

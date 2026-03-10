@@ -1,15 +1,45 @@
+import { useEffect } from "react";
 import { getWeekKey, formatWeekLabel, timeAgo } from "../utils";
 import { fonts, colors, shared } from "../styles";
 import SLabel from "./SLabel";
 import ActivityFeed from "./ActivityFeed";
 
+const DRIFT_KEYFRAMES = `
+@keyframes sipDrift {
+  0%   { transform: translate(0vw, 0vh); }
+  20%  { transform: translate(55vw, 15vh); }
+  40%  { transform: translate(20vw, 50vh); }
+  60%  { transform: translate(60vw, 35vh); }
+  80%  { transform: translate(10vw, 60vh); }
+  100% { transform: translate(0vw, 0vh); }
+}`;
+
 export default function GridView({ D, me, onOpen, onWeekly }) {
+  useEffect(() => {
+    const id = "sip-drift-keyframes";
+    if (!document.getElementById(id)) {
+      const style = document.createElement("style");
+      style.id = id;
+      style.textContent = DRIFT_KEYFRAMES;
+      document.head.appendChild(style);
+    }
+  }, []);
+
   return (
-    <div>
+    <div style={{ position: "relative" }}>
+      {/* Floating SIP */}
+      <div style={{
+        position: "fixed", top: 0, left: 0,
+        fontFamily: fonts.heading, fontSize: 72, color: colors.accent,
+        opacity: 0.12, letterSpacing: 8, lineHeight: 1,
+        pointerEvents: "none", zIndex: 0, userSelect: "none",
+        animation: "sipDrift 30s ease-in-out infinite",
+      }}>
+        SIP
+      </div>
+
+      <div style={{ position: "relative", zIndex: 1 }}>
       <div style={{ marginBottom: 32 }}>
-        <h1 style={{ fontFamily: fonts.heading, fontSize: 52, margin: "0 0 4px", letterSpacing: 3, lineHeight: 1 }}>
-          SIP<span style={{ color: colors.accent }}>.</span>
-        </h1>
         <SLabel>{D.members.length} MEMBER{D.members.length !== 1 ? "S" : ""}</SLabel>
       </div>
 
@@ -40,7 +70,7 @@ export default function GridView({ D, me, onOpen, onWeekly }) {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div style={{ flex: 1 }}>
                 <div style={{ marginBottom: 6 }}>
-                  <span style={{ fontFamily: fonts.heading, fontSize: 22, letterSpacing: 2, color: colors.accent }}>WEEKLY CHECK-IN</span>
+                  <span style={{ fontFamily: fonts.heading, fontSize: 22, letterSpacing: 2, color: "#FFFFFF" }}>WEEKLY CHECK-IN</span>
                 </div>
                 <SLabel>{formatWeekLabel(getWeekKey())}</SLabel>
               </div>
@@ -68,7 +98,7 @@ export default function GridView({ D, me, onOpen, onWeekly }) {
                 <div style={{ textAlign: "center" }}>
                   <div style={{
                     fontFamily: fonts.heading, fontSize: 28,
-                    color: allDone ? colors.success : colors.accent,
+                    color: allDone ? colors.success : "#FFFFFF",
                   }}>
                     {checkedIn.length}/{D.members.length}
                   </div>
@@ -135,6 +165,7 @@ export default function GridView({ D, me, onOpen, onWeekly }) {
 
       <div style={{ marginTop: 32 }}>
         <ActivityFeed D={D} onOpen={onOpen} />
+      </div>
       </div>
     </div>
   );
