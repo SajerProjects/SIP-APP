@@ -35,7 +35,9 @@ export default function Hdr({ D, myMember, viewing, view, onBack, onWeekly, memb
   return (
     <>
       <header style={{ borderBottom: `1px solid ${colors.cardBorder}`, background: colors.bg, position: "sticky", top: 0, zIndex: 50, backdropFilter: "blur(12px)" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 20px", display: "flex", alignItems: "center", gap: 20, height: 58 }}>
+        <div style={{ display: "flex", alignItems: "center", height: 58, padding: "0 20px", position: "relative" }}>
+          <span style={{ fontFamily: fonts.mono, fontSize: 9, color: colors.textDimmest, letterSpacing: 1, position: "absolute", left: 20 }}>v1.1</span>
+          <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", alignItems: "center", gap: 20 }}>
           {(viewing || view === "weekly") ? (
             <button onClick={onBack} style={shared.backBtn}>
               <span style={{ fontSize: 16 }}>&larr;</span> BACK
@@ -71,6 +73,7 @@ export default function Hdr({ D, myMember, viewing, view, onBack, onWeekly, memb
             }}
             title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           >{theme === "dark" ? "\u2600\uFE0F" : "\u{1F319}"}</button>
+          </div>
         </div>
       </header>
 

@@ -177,11 +177,11 @@ export default function App() {
         onUpdateProfile={updateMemberProfile} me={me}
       />
       {view === "home" && !viewing ? (
-        <div style={{ display: "flex", justifyContent: "flex-end", padding: "28px 20px", gap: 24 }}>
-          <div style={{ width: "100%", maxWidth: 900 }}>
+        <div style={{ display: "flex", justifyContent: "center", padding: "28px 20px 28px 340px", gap: 24 }}>
+          <div style={{ width: "100%", maxWidth: 720 }}>
             <GridView D={D} me={me} onOpen={id => setViewing(id)} onWeekly={() => { setViewing(null); setView("weekly"); }} />
           </div>
-          <div className="sip-bulletin-side" style={{ paddingTop: 46, flexShrink: 0 }}>
+          <div className="sip-bulletin-side" style={{ paddingTop: 46, flexShrink: 0, marginLeft: 48 }}>
             <div style={{ position: "sticky", top: 80 }}>
               <BulletinBoard
                 bulletin={D.bulletin || ""}
