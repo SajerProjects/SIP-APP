@@ -8,6 +8,7 @@ import JoinScreen from "./components/JoinScreen";
 import GridView from "./components/GridView";
 import WeeklyView from "./components/WeeklyView";
 import DocView from "./components/DocView";
+import BulletinBoard from "./components/BulletinBoard";
 
 export default function App() {
   const [D, setD] = useState(null);
@@ -149,6 +150,13 @@ export default function App() {
     return d;
   });
 
+  const updateBulletin = (text) => update(d => {
+    d.bulletin = text;
+    d.bulletinEditedBy = me;
+    d.bulletinEditedAt = new Date().toISOString();
+    return d;
+  });
+
   const addCheckinComment = (weekKey, memberId, text) => update(d => {
     if (!d.weeklies?.[weekKey]?.checkins?.[memberId]) return d;
     const ci = d.weeklies[weekKey].checkins[memberId];
@@ -168,15 +176,32 @@ export default function App() {
         memberName={member?.name} connected={connected}
         onUpdateProfile={updateMemberProfile} me={me}
       />
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "28px 20px" }}>
-        {view === "weekly" ? (
-          <WeeklyView D={D} me={me} onUpdateCheckin={updateCheckin} onAddCheckinComment={addCheckinComment} onOpenDoc={id => { setViewing(id); setView("home"); }} />
-        ) : !viewing ? (
-          <GridView D={D} me={me} onOpen={id => setViewing(id)} onWeekly={() => { setViewing(null); setView("weekly"); }} />
-        ) : (
-          <DocView member={member} me={me} allMembers={D.members} onUpdateSection={updateSection} onAddComment={addComment} onAddSection={addSection} />
-        )}
-      </div>
+      {view === "home" && !viewing ? (
+        <div style={{ display: "flex", justifyContent: "flex-end", padding: "28px 20px", gap: 24 }}>
+          <div style={{ width: "100%", maxWidth: 900 }}>
+            <GridView D={D} me={me} onOpen={id => setViewing(id)} onWeekly={() => { setViewing(null); setView("weekly"); }} />
+          </div>
+          <div className="sip-bulletin-side" style={{ paddingTop: 46, flexShrink: 0 }}>
+            <div style={{ position: "sticky", top: 80 }}>
+              <BulletinBoard
+                bulletin={D.bulletin || ""}
+                lastEditedBy={D.bulletinEditedBy}
+                lastEditedAt={D.bulletinEditedAt}
+                allMembers={D.members}
+                onUpdate={updateBulletin}
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div style={{ maxWidth: 900, margin: "0 auto", padding: "28px 20px" }}>
+          {view === "weekly" ? (
+            <WeeklyView D={D} me={me} onUpdateCheckin={updateCheckin} onAddCheckinComment={addCheckinComment} onOpenDoc={id => { setViewing(id); setView("home"); }} />
+          ) : (
+            <DocView member={member} me={me} allMembers={D.members} onUpdateSection={updateSection} onAddComment={addComment} onAddSection={addSection} />
+          )}
+        </div>
+      )}
     </div>
   );
 }

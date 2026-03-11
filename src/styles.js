@@ -5,21 +5,22 @@ export const fonts = {
 };
 
 export const colors = {
-  bg: "#09090D",
-  card: "#111118",
-  cardBorder: "#1A1A22",
-  inputBg: "#1A1A26",
-  inputBorder: "#252535",
-  subtleBorder: "#2A2A38",
-  text: "#EEE8E0",
-  textMuted: "#CCC",
-  textDim: "#888",
-  textDimmer: "#555",
-  textDimmest: "#444",
-  textGhost: "#333",
-  accent: "#F0B429",
-  success: "#34D399",
-  error: "#F87171",
+  bg: "var(--sip-bg)",
+  card: "var(--sip-card)",
+  cardBorder: "var(--sip-card-border)",
+  inputBg: "var(--sip-input-bg)",
+  inputBorder: "var(--sip-input-border)",
+  subtleBorder: "var(--sip-subtle-border)",
+  text: "var(--sip-text)",
+  textMuted: "var(--sip-text-muted)",
+  textDim: "var(--sip-text-dim)",
+  textDimmer: "var(--sip-text-dimmer)",
+  textDimmest: "var(--sip-text-dimmest)",
+  textGhost: "var(--sip-text-ghost)",
+  accent: "var(--sip-accent)",
+  success: "var(--sip-success)",
+  error: "var(--sip-error)",
+  hoverCard: "var(--sip-hover-card)",
 };
 
 export const shared = {

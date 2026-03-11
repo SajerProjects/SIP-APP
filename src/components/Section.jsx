@@ -104,7 +104,7 @@ export default function Section({ section, memberId, isOwner, me, allMembers, on
                     </span>
                   </div>
                   <div style={{
-                    fontSize: 13, color: "#AAA", lineHeight: 1.6,
+                    fontSize: 13, color: colors.textMuted, lineHeight: 1.6,
                     borderLeft: `2px solid ${author?.color || colors.textDimmest}`,
                     paddingLeft: 10,
                   }}>{c.text}</div>

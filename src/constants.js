@@ -23,4 +23,4 @@ export const WEEKLY_PROMPTS = [
 
 export const INVITE_CODE = "$ip2026";
 export const DB_PATH = "sip_data";
-export const INIT_DATA = { members: [], groupName: "SIP", weeklies: {} };
+export const INIT_DATA = { members: [], groupName: "SIP", weeklies: {}, bulletin: "" };

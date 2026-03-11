@@ -96,7 +96,7 @@ export default function WeeklyView({ D, me, onUpdateCheckin, onAddCheckinComment
                       {timeAgo(c.date)}
                     </span>
                   </div>
-                  <div style={{ fontSize: 13, color: "#AAA", lineHeight: 1.6, borderLeft: `2px solid ${author?.color || colors.textDimmest}`, paddingLeft: 10 }}>{c.text}</div>
+                  <div style={{ fontSize: 13, color: colors.textMuted, lineHeight: 1.6, borderLeft: `2px solid ${author?.color || colors.textDimmest}`, paddingLeft: 10 }}>{c.text}</div>
                 </div>
               </div>
             );
@@ -255,7 +255,7 @@ export default function WeeklyView({ D, me, onUpdateCheckin, onAddCheckinComment
                 display: "flex", alignItems: "center", gap: 14,
                 opacity: ci ? 1 : 0.5,
               }}
-              onMouseEnter={e => { if (ci) { e.currentTarget.style.borderColor = m.color + "60"; e.currentTarget.style.background = "#141420"; } }}
+              onMouseEnter={e => { if (ci) { e.currentTarget.style.borderColor = m.color + "60"; e.currentTarget.style.background = colors.hoverCard; } }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = isMe ? m.color + "30" : colors.cardBorder; e.currentTarget.style.borderLeftColor = m.color; e.currentTarget.style.background = colors.card; }}
             >
               <span style={{ fontSize: 28, flexShrink: 0 }}>{m.avatar}</span>

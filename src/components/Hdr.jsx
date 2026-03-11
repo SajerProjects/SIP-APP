@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EMOJI_OPTIONS } from "../constants";
 import { fonts, colors, shared } from "../styles";
 import ABtn from "./ABtn";
+
+function loadTheme() {
+  try { return localStorage.getItem("sip_theme") || "dark"; } catch { return "dark"; }
+}
 
 export default function Hdr({ D, myMember, viewing, view, onBack, onWeekly, memberName, connected, onUpdateProfile, me }) {
   const [editing, setEditing] = useState(false);
   const [profileName, setProfileName] = useState("");
   const [profileAvatar, setProfileAvatar] = useState("");
+  const [theme, setTheme] = useState(loadTheme);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("sip-light", theme === "light");
+    try { localStorage.setItem("sip_theme", theme); } catch {}
+  }, [theme]);
 
   const openEdit = () => {
     if (!myMember) return;
@@ -52,13 +62,22 @@ export default function Hdr({ D, myMember, viewing, view, onBack, onWeekly, memb
               }}>EDIT</button>
             </div>
           )}
+          <button
+            onClick={() => setTheme(t => t === "dark" ? "light" : "dark")}
+            style={{
+              background: "none", border: `1px solid ${colors.subtleBorder}`, color: colors.textDimmer,
+              borderRadius: 4, padding: "3px 8px", fontSize: 14, cursor: "pointer",
+              lineHeight: 1, transition: "all .15s",
+            }}
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          >{theme === "dark" ? "\u2600\uFE0F" : "\u{1F319}"}</button>
         </div>
       </header>
 
       {editing && myMember && (
         <div style={{
           position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-          background: "rgba(0,0,0,0.7)", zIndex: 100,
+          background: "var(--sip-overlay)", zIndex: 100,
           display: "flex", alignItems: "center", justifyContent: "center",
         }} onClick={(e) => { if (e.target === e.currentTarget) setEditing(false); }}>
           <div style={{

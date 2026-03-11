@@ -1,10 +1,51 @@
 * {
   box-sizing: border-box;
 }
+
+:root {
+  --sip-bg: #09090D;
+  --sip-card: #111118;
+  --sip-card-border: #1A1A22;
+  --sip-input-bg: #1A1A26;
+  --sip-input-border: #252535;
+  --sip-subtle-border: #2A2A38;
+  --sip-text: #EEE8E0;
+  --sip-text-muted: #CCC;
+  --sip-text-dim: #888;
+  --sip-text-dimmer: #555;
+  --sip-text-dimmest: #444;
+  --sip-text-ghost: #333;
+  --sip-accent: #F0B429;
+  --sip-success: #34D399;
+  --sip-error: #F87171;
+  --sip-overlay: rgba(0,0,0,0.7);
+  --sip-hover-card: #141420;
+}
+
+:root.sip-light {
+  --sip-bg: #F4F3EF;
+  --sip-card: #FFFFFF;
+  --sip-card-border: #E2E0DB;
+  --sip-input-bg: #EEECEA;
+  --sip-input-border: #D5D3CE;
+  --sip-subtle-border: #DDD;
+  --sip-text: #1A1A1A;
+  --sip-text-muted: #444;
+  --sip-text-dim: #666;
+  --sip-text-dimmer: #999;
+  --sip-text-dimmest: #BBB;
+  --sip-text-ghost: #CCC;
+  --sip-accent: #D49B1F;
+  --sip-success: #22A06B;
+  --sip-error: #E04040;
+  --sip-overlay: rgba(0,0,0,0.35);
+  --sip-hover-card: #F0EFEB;
+}
+
 html, body, #root {
   margin: 0;
   min-height: 100vh;
-  background: #09090D;
+  background: var(--sip-bg);
   overflow-x: hidden;
 }
 .sip-grid {
@@ -15,5 +56,10 @@ html, body, #root {
 @media (max-width: 600px) {
   .sip-grid {
     grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 1100px) {
+  .sip-bulletin-side {
+    display: none;
   }
 }

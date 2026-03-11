@@ -1,44 +1,12 @@
-import { useEffect } from "react";
 import { getWeekKey, formatWeekLabel, timeAgo } from "../utils";
 import { fonts, colors, shared } from "../styles";
 import SLabel from "./SLabel";
 import ActivityFeed from "./ActivityFeed";
 
-const DRIFT_KEYFRAMES = `
-@keyframes sipDrift {
-  0%   { transform: translate(0vw, 0vh); }
-  20%  { transform: translate(55vw, 15vh); }
-  40%  { transform: translate(20vw, 50vh); }
-  60%  { transform: translate(60vw, 35vh); }
-  80%  { transform: translate(10vw, 60vh); }
-  100% { transform: translate(0vw, 0vh); }
-}`;
-
 export default function GridView({ D, me, onOpen, onWeekly }) {
-  useEffect(() => {
-    const id = "sip-drift-keyframes";
-    if (!document.getElementById(id)) {
-      const style = document.createElement("style");
-      style.id = id;
-      style.textContent = DRIFT_KEYFRAMES;
-      document.head.appendChild(style);
-    }
-  }, []);
 
   return (
-    <div style={{ position: "relative" }}>
-      {/* Floating SIP */}
-      <div style={{
-        position: "fixed", top: 0, left: 0,
-        fontFamily: fonts.heading, fontSize: 72, color: colors.accent,
-        opacity: 0.12, letterSpacing: 8, lineHeight: 1,
-        pointerEvents: "none", zIndex: 0, userSelect: "none",
-        animation: "sipDrift 30s ease-in-out infinite",
-      }}>
-        SIP
-      </div>
-
-      <div style={{ position: "relative", zIndex: 1 }}>
+    <div>
       <div style={{ marginBottom: 32 }}>
         <SLabel>{D.members.length} MEMBER{D.members.length !== 1 ? "S" : ""}</SLabel>
       </div>
@@ -64,13 +32,13 @@ export default function GridView({ D, me, onOpen, onWeekly }) {
               transition: "all .2s",
               background: colors.card,
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = "#141420"; e.currentTarget.style.borderColor = colors.accent + "80"; }}
+            onMouseEnter={e => { e.currentTarget.style.background = colors.hoverCard; e.currentTarget.style.borderColor = colors.accent + "80"; }}
             onMouseLeave={e => { e.currentTarget.style.background = colors.card; e.currentTarget.style.borderColor = colors.cardBorder; }}
           >
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div style={{ flex: 1 }}>
                 <div style={{ marginBottom: 6 }}>
-                  <span style={{ fontFamily: fonts.heading, fontSize: 22, letterSpacing: 2, color: "#FFFFFF" }}>WEEKLY CHECK-IN</span>
+                  <span style={{ fontFamily: fonts.heading, fontSize: 22, letterSpacing: 2, color: colors.text }}>WEEKLY CHECK-IN</span>
                 </div>
                 <SLabel>{formatWeekLabel(getWeekKey())}</SLabel>
               </div>
@@ -83,7 +51,7 @@ export default function GridView({ D, me, onOpen, onWeekly }) {
                     return (
                       <div key={m.id} style={{
                         width: 30, height: 30, borderRadius: "50%",
-                        background: done ? colors.inputBg : "#0D0D14",
+                        background: done ? colors.inputBg : colors.bg,
                         border: `2px solid ${done ? m.color : colors.textGhost}`,
                         display: "flex", alignItems: "center", justifyContent: "center",
                         fontSize: 14, marginLeft: i > 0 ? -8 : 0, zIndex: D.members.length - i,
@@ -132,7 +100,7 @@ export default function GridView({ D, me, onOpen, onWeekly }) {
                 borderLeft: `3px solid ${m.color}`,
                 display: "flex", alignItems: "center", gap: 16,
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = m.color + "60"; e.currentTarget.style.background = "#141420"; }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = m.color + "60"; e.currentTarget.style.background = colors.hoverCard; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = isMe ? m.color + "30" : colors.cardBorder; e.currentTarget.style.borderLeftColor = m.color; e.currentTarget.style.background = colors.card; }}
             >
               <div style={{
@@ -165,7 +133,6 @@ export default function GridView({ D, me, onOpen, onWeekly }) {
 
       <div style={{ marginTop: 32 }}>
         <ActivityFeed D={D} onOpen={onOpen} />
-      </div>
       </div>
     </div>
   );
