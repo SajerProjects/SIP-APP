@@ -18,9 +18,11 @@ export default function GridView({ D, me, onOpen, onWeekly }) {
         const checkins = weekData.checkins || {};
         const checkedIn = D.members.filter(m => checkins[m.id]?.filledAt);
         const allDone = checkedIn.length === D.members.length;
+        const iCheckedIn = !!checkins[me]?.filledAt;
 
         return (
           <div
+            className={!iCheckedIn && !allDone ? "sip-weekly-pulse" : undefined}
             onClick={onWeekly}
             style={{
               ...shared.card,

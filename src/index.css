@@ -58,6 +58,14 @@ html, body, #root {
     grid-template-columns: 1fr;
   }
 }
+@keyframes sip-pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(240, 180, 41, 0.15); }
+  50% { box-shadow: 0 0 20px rgba(240, 180, 41, 0.4), 0 0 40px rgba(240, 180, 41, 0.15); }
+}
+.sip-weekly-pulse {
+  animation: sip-pulse-glow 2.5s ease-in-out infinite;
+  border-color: rgba(240, 180, 41, 0.35) !important;
+}
 @media (max-width: 1100px) {
   .sip-sidebar-left,
   .sip-sidebar-right {
