@@ -29,7 +29,7 @@ export default function SipGoals({ goals, lastEditedBy, lastEditedAt, allMembers
       width: 260,
       flexShrink: 0,
     }}>
-      <div style={{ ...shared.sectionLabel, marginBottom: 14 }}>SIP GOALS</div>
+      <div style={{ fontFamily: fonts.heading, fontSize: 22, letterSpacing: 2, color: colors.text, marginBottom: 14 }}>SIP GOALS</div>
 
       {editing ? (
         <div>

@@ -30,7 +30,7 @@ export default function BulletinBoard({ bulletin, lastEditedBy, lastEditedAt, al
       width: 260,
       flexShrink: 0,
     }}>
-      <div style={{ ...shared.sectionLabel, marginBottom: 14 }}>BULLETIN BOARD</div>
+      <div style={{ fontFamily: fonts.heading, fontSize: 22, letterSpacing: 2, color: colors.text, marginBottom: 14 }}>BULLETIN BOARD</div>
 
       {editing ? (
         <div>
