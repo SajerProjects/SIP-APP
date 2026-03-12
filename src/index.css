@@ -59,7 +59,8 @@ html, body, #root {
   }
 }
 @media (max-width: 1100px) {
-  .sip-bulletin-side {
+  .sip-sidebar-left,
+  .sip-sidebar-right {
     display: none;
   }
 }

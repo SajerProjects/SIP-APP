@@ -9,6 +9,7 @@ import GridView from "./components/GridView";
 import WeeklyView from "./components/WeeklyView";
 import DocView from "./components/DocView";
 import BulletinBoard from "./components/BulletinBoard";
+import SipGoals from "./components/SipGoals";
 import WeeklyReminder from "./components/WeeklyReminder";
 
 export default function App() {
@@ -159,6 +160,13 @@ export default function App() {
     return d;
   });
 
+  const updateGoals = (text) => update(d => {
+    d.goals = text;
+    d.goalsEditedBy = me;
+    d.goalsEditedAt = new Date().toISOString();
+    return d;
+  });
+
   const addCheckinComment = (weekKey, memberId, text) => update(d => {
     if (!d.weeklies?.[weekKey]?.checkins?.[memberId]) return d;
     const ci = d.weeklies[weekKey].checkins[memberId];
@@ -179,11 +187,22 @@ export default function App() {
         onUpdateProfile={updateMemberProfile} me={me}
       />
       {view === "home" && !viewing ? (
-        <div style={{ display: "flex", justifyContent: "center", padding: "28px 20px 28px 340px", gap: 24 }}>
+        <div style={{ display: "flex", justifyContent: "center", padding: "28px 20px", gap: 24 }}>
+          <div className="sip-sidebar-left" style={{ paddingTop: 46, flexShrink: 0, marginRight: 48 }}>
+            <div style={{ position: "sticky", top: 80 }}>
+              <SipGoals
+                goals={D.goals || ""}
+                lastEditedBy={D.goalsEditedBy}
+                lastEditedAt={D.goalsEditedAt}
+                allMembers={D.members}
+                onUpdate={updateGoals}
+              />
+            </div>
+          </div>
           <div style={{ width: "100%", maxWidth: 720 }}>
             <GridView D={D} me={me} onOpen={id => setViewing(id)} onWeekly={() => { setViewing(null); setView("weekly"); }} />
           </div>
-          <div className="sip-bulletin-side" style={{ paddingTop: 46, flexShrink: 0, marginLeft: 48 }}>
+          <div className="sip-sidebar-right" style={{ paddingTop: 46, flexShrink: 0, marginLeft: 48 }}>
             <div style={{ position: "sticky", top: 80 }}>
               <BulletinBoard
                 bulletin={D.bulletin || ""}
