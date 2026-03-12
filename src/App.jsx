@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { db, ref, onValue, set } from "./firebase";
-import { uid, loadMyId, persistMyId } from "./utils";
+import { uid, loadMyId, persistMyId, getWeekKey } from "./utils";
 import { HUES, DEFAULT_SECTIONS, INIT_DATA, DB_PATH } from "./constants";
 import { fonts, colors } from "./styles";
 import Hdr from "./components/Hdr";
@@ -9,6 +9,7 @@ import GridView from "./components/GridView";
 import WeeklyView from "./components/WeeklyView";
 import DocView from "./components/DocView";
 import BulletinBoard from "./components/BulletinBoard";
+import WeeklyReminder from "./components/WeeklyReminder";
 
 export default function App() {
   const [D, setD] = useState(null);
@@ -16,6 +17,7 @@ export default function App() {
   const [viewing, setViewing] = useState(null);
   const [view, setView] = useState("home");
   const [connected, setConnected] = useState(true);
+  const [reminderDismissed, setReminderDismissed] = useState(false);
   const initialLoadDone = useRef(false);
 
   // Load fonts
@@ -202,6 +204,21 @@ export default function App() {
           )}
         </div>
       )}
+      {!reminderDismissed && view === "home" && !viewing && (() => {
+        const day = new Date().getDay();
+        const isReminderDay = day >= 4 || day === 0; // Thu(4), Fri(5), Sat(6), Sun(0)
+        const weekKey = getWeekKey();
+        const myCheckin = D.weeklies?.[weekKey]?.checkins?.[me];
+        if (!isReminderDay || myCheckin?.filledAt) return null;
+        return (
+          <WeeklyReminder
+            D={D}
+            me={me}
+            onCheckIn={() => { setReminderDismissed(true); setViewing(null); setView("weekly"); }}
+            onDismiss={() => setReminderDismissed(true)}
+          />
+        );
+      })()}
     </div>
   );
 }
