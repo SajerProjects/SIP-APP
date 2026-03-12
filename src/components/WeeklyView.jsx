@@ -222,9 +222,9 @@ export default function WeeklyView({ D, me, onUpdateCheckin, onAddCheckinComment
                 </div>
               </div>
               <button onClick={startEdit} style={{
-                background: "none", border: `1px solid ${colors.subtleBorder}`, color: colors.textDimmer,
-                borderRadius: 6, padding: "6px 14px", fontSize: 10, cursor: "pointer",
-                fontFamily: fonts.mono, letterSpacing: 1,
+                background: colors.accent, color: colors.bg, border: "none",
+                borderRadius: 8, padding: "9px 18px", fontSize: 11, cursor: "pointer",
+                fontFamily: fonts.mono, fontWeight: 700, letterSpacing: 2,
               }}>UPDATE</button>
             </div>
           ) : (
