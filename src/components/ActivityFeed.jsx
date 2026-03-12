@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { timeAgo } from "../utils";
+import { timeAgo, formatWeekLabel } from "../utils";
 import { fonts, colors, shared } from "../styles";
 
 export default function ActivityFeed({ D, onOpen }) {
@@ -20,6 +20,19 @@ export default function ActivityFeed({ D, onOpen }) {
       });
     });
   });
+
+  if (D.weeklies) {
+    Object.entries(D.weeklies).forEach(([weekKey, week]) => {
+      if (!week.checkins) return;
+      Object.entries(week.checkins).forEach(([memberId, ci]) => {
+        if (!ci.filledAt) return;
+        const member = D.members.find(m => m.id === memberId);
+        if (member) {
+          events.push({ type: "checkin", date: ci.filledAt, member, weekKey });
+        }
+      });
+    });
+  }
 
   events.sort((a, b) => new Date(b.date) - new Date(a.date));
   const recent = events.slice(0, 20);
@@ -58,6 +71,9 @@ export default function ActivityFeed({ D, onOpen }) {
         )}
         {ev.type === "comment" && (
           <>commented on <span style={{ color: ev.member.color }}>{ev.member.name}</span>'s <span style={{ color: colors.textDim }}>{ev.section.title.length > 25 ? ev.section.title.slice(0, 25) + "..." : ev.section.title}</span></>
+        )}
+        {ev.type === "checkin" && (
+          <>checked in for <span style={{ color: colors.success }}>{formatWeekLabel(ev.weekKey)}</span></>
         )}
       </div>
     </div>
