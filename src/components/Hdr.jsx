@@ -36,7 +36,7 @@ export default function Hdr({ D, myMember, viewing, view, onBack, onWeekly, memb
     <>
       <header style={{ borderBottom: `1px solid ${colors.cardBorder}`, background: colors.bg, position: "sticky", top: 0, zIndex: 50, backdropFilter: "blur(12px)" }}>
         <div style={{ display: "flex", alignItems: "center", height: 58, padding: "0 20px", position: "relative" }}>
-          <span style={{ fontFamily: fonts.mono, fontSize: 9, color: colors.textDimmest, letterSpacing: 1, position: "absolute", left: 20 }}>v1.1</span>
+          <span style={{ fontFamily: fonts.mono, fontSize: 9, color: colors.textDimmest, letterSpacing: 1, position: "absolute", left: 20 }}>v{__APP_VERSION__}</span>
           <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", display: "flex", alignItems: "center", gap: 20 }}>
           {(viewing || view === "weekly") ? (
             <button onClick={onBack} style={shared.backBtn}>
